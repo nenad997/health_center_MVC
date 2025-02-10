@@ -14,7 +14,7 @@ import java.util.List;
 public class Patient extends User {
     @ManyToOne
     @JoinColumn(name = "chosen_doctor_id", nullable = false)
-    private Doctor chosenDoctor;
+    private Doctor doctor;
 
     @Column(name = "health_card_number")
     private String healthCardNumber;
@@ -32,21 +32,21 @@ public class Patient extends User {
     public Patient() {
     }
 
-    public Patient(String firstName, String lastName, String jmbg, String sex, String address, String phoneNumber, String userName, String password, Doctor chosenDoctor,
+    public Patient(String firstName, String lastName, String jmbg, String sex, String address, String phoneNumber, String userName, String password, Doctor doctor,
                    String healthCardNumber, LocalDateTime healthCardExpiration, InsuranceCategory insuranceCategory) {
         super(firstName, lastName, jmbg, sex, address, phoneNumber, userName, password, UserRole.PATIENT);
-        this.chosenDoctor = chosenDoctor;
+        this.doctor = doctor;
         this.healthCardNumber = healthCardNumber;
         this.healthCardExpiration = healthCardExpiration;
         this.insuranceCategory = insuranceCategory;
     }
 
     public Doctor getChosenDoctor() {
-        return chosenDoctor;
+        return doctor;
     }
 
-    public void setChosenDoctor(Doctor chosenDoctor) {
-        this.chosenDoctor = chosenDoctor;
+    public void setChosenDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public String getHealthCardNumber() {
@@ -82,8 +82,8 @@ public class Patient extends User {
     }
 
     public void addExamination(Examination examination) {
-        if (!examination.getScheduledPatient().equals(this)) {
-            examination.setScheduledPatient(this);
+        if (!examination.getPatient().equals(this)) {
+            examination.setPatient(this);
         }
         this.examinations.add(examination);
     }

@@ -13,12 +13,12 @@ public class Examination {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
-    private Patient scheduledPatient;
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id", nullable = false)
-    private Doctor examinationDoctor;
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
     @Column(name = "examination_time")
     private LocalDateTime examinationTime;
@@ -36,9 +36,9 @@ public class Examination {
     public Examination() {
     }
 
-    public Examination(Patient scheduledPatient, Doctor examinationDoctor, LocalDateTime examinationTime, String room, String description) {
-        this.scheduledPatient = scheduledPatient;
-        this.examinationDoctor = examinationDoctor;
+    public Examination(Patient patient, Doctor doctor, LocalDateTime examinationTime, String room, String description) {
+        this.patient = patient;
+        this.doctor = doctor;
         this.examinationTime = examinationTime;
         this.room = room;
         this.description = description;
@@ -53,20 +53,20 @@ public class Examination {
         this.id = id;
     }
 
-    public Patient getScheduledPatient() {
-        return scheduledPatient;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setScheduledPatient(Patient scheduledPatient) {
-        this.scheduledPatient = scheduledPatient;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Doctor getExaminationDoctor() {
-        return examinationDoctor;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setExaminationDoctor(Doctor examinationDoctor) {
-        this.examinationDoctor = examinationDoctor;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public LocalDateTime getExaminationTime() {

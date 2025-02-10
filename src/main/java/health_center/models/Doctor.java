@@ -87,8 +87,8 @@ public class Doctor extends User {
     }
 
     public void addExamination(Examination examination) {
-        if (examination.getExaminationDoctor() != null && !examination.getExaminationDoctor().equals(this)) {
-            examination.setExaminationDoctor(this);
+        if (examination.getDoctor() != null && !examination.getDoctor().equals(this)) {
+            examination.setDoctor(this);
         }
         this.examinations.add(examination);
     }
