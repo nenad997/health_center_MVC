@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "service")
-public class _Service {
+public class Servicing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +22,10 @@ public class _Service {
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Nurse> nurses = new ArrayList<>();
 
-    public _Service() {
+    public Servicing() {
     }
 
-    public _Service(String title) {
+    public Servicing(String title) {
         this.title = title;
     }
 
@@ -79,7 +79,7 @@ public class _Service {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        _Service service = (_Service) o;
+        Servicing service = (Servicing) o;
         return Objects.equals(id, service.id);
     }
 

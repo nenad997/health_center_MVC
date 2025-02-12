@@ -37,12 +37,16 @@ public class Examination {
     }
 
     public Examination(Patient patient, Doctor doctor, LocalDateTime examinationTime, String room, String description) {
+        this(patient, doctor, examinationTime, room, description, ExaminationStatus.REQUESTED);
+    }
+
+    public Examination(Patient patient, Doctor doctor, LocalDateTime examinationTime, String room, String description, ExaminationStatus status) {
         this.patient = patient;
         this.doctor = doctor;
         this.examinationTime = examinationTime;
         this.room = room;
         this.description = description;
-        this.status = ExaminationStatus.REQUESTED;
+        this.status = status;
     }
 
     public Long getId() {

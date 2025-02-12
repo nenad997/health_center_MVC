@@ -1,6 +1,5 @@
 package health_center.models;
 
-import health_center.models.super_classes.User;
 import health_center.util.InsuranceCategory;
 import health_center.util.UserRole;
 import jakarta.persistence.*;

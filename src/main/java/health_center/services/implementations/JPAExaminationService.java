@@ -10,6 +10,7 @@ import health_center.services.ExaminationService;
 import health_center.util.ExaminationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,29 +32,34 @@ public class JPAExaminationService implements ExaminationService {
     }
 
     @Override
-    public List<Examination> getExaminationsByPatient(Long patientId) {
+    public List<Examination> getAllByPatientId(Long patientId) {
         return examinationRepo.findByScheduledPatientId(patientId);
     }
 
     @Override
-    public Examination createExamination(Examination examination) {
-        Optional<Patient> foundPatient = patientRepo.findById(examination.getPatient().getId());
-
-        if (foundPatient.isEmpty()) {
-            throw new IllegalArgumentException("Patient with id " + examination.getPatient().getId() + " not found!");
-        }
-
-        Optional<Doctor> foundDoctor = doctorRepo.findById(examination.getDoctor().getId());
-
-        if (foundDoctor.isEmpty()) {
-            throw new IllegalArgumentException("Doctor with id " + examination.getDoctor().getId() + " not found!");
-        }
-
+    public Examination save(Examination examination) {
         return examinationRepo.save(examination);
     }
 
     @Override
-    public Examination updateExamination(Long examinationId, String newDescription) {
+    public Examination save(Long patientId, Long doctorId, LocalDateTime examinationTime, String room, String description) {
+        Optional<Patient> foundPatient = patientRepo.findById(patientId);
+
+        if (foundPatient.isEmpty()) {
+            throw new IllegalArgumentException("Patient with id " + patientId + " not found!");
+        }
+
+        Optional<Doctor> foundDoctor = doctorRepo.findById(doctorId);
+
+        if (foundDoctor.isEmpty()) {
+            throw new IllegalArgumentException("Doctor with id " + doctorId + " not found!");
+        }
+
+        return examinationRepo.save(new Examination(foundPatient.get(), foundDoctor.get(), examinationTime, room, description));
+    }
+
+    @Override
+    public Examination update(Long examinationId, String newDescription) {
         Optional<Examination> foundExamination = examinationRepo.findById(examinationId);
 
         if (foundExamination.isEmpty()) {
@@ -71,7 +77,7 @@ public class JPAExaminationService implements ExaminationService {
     }
 
     @Override
-    public Examination updateExamination(Long examinationId, ExaminationStatus status) {
+    public Examination update(Long examinationId, ExaminationStatus status) {
         Optional<Examination> foundExamination = examinationRepo.findById(examinationId);
 
         if (foundExamination.isEmpty()) {
@@ -82,11 +88,6 @@ public class JPAExaminationService implements ExaminationService {
 
         toUpdate.setStatus(status);
         return examinationRepo.save(toUpdate);
-    }
-
-    @Override
-    public Examination save(Examination examination) {
-        return examinationRepo.save(examination);
     }
 
     @Override

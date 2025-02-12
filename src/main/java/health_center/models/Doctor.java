@@ -1,6 +1,5 @@
 package health_center.models;
 
-import health_center.models.super_classes.User;
 import health_center.util.UserRole;
 import jakarta.persistence.*;
 
@@ -18,7 +17,7 @@ public class Doctor extends User {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private _Service service;
+    private Servicing service;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Patient> patients = new ArrayList<>();
@@ -29,7 +28,7 @@ public class Doctor extends User {
     public Doctor() {
     }
 
-    public Doctor(String firstName, String lastName, String jmbg, String sex, String address, String phoneNumber, String userName, String password, double salary, String specialization, _Service service) {
+    public Doctor(String firstName, String lastName, String jmbg, String sex, String address, String phoneNumber, String userName, String password, double salary, String specialization, Servicing service) {
         super(firstName, lastName, jmbg, sex, address, phoneNumber, userName, password, UserRole.DOCTOR);
         this.salary = salary;
         this.specialization = specialization;
@@ -52,11 +51,11 @@ public class Doctor extends User {
         this.specialization = specialization;
     }
 
-    public _Service getService() {
+    public Servicing getService() {
         return service;
     }
 
-    public void setService(_Service service) {
+    public void setService(Servicing service) {
         if (!service.getDoctors().contains(this)) {
             service.getDoctors().add(this);
         }

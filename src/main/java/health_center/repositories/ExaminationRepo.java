@@ -13,4 +13,7 @@ public interface ExaminationRepo extends JpaRepository<Examination, Long> {
 
     @Query("SELECT e FROM Examination e WHERE e.patient.id = :patientId")
     List<Examination> findByScheduledPatientId(@Param("patientId") Long patientId);
+
+    @Query("SELECT e FROM Examination e WHERE e.doctor.id = :doctorId AND e.patient.id = :patientId")
+    Examination findByDoctorAndPatient(@Param("doctorId") Long doctorId, @Param("patientId") Long patientId);
 }
